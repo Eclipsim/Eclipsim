@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+#  eclipsimd The Eclipsim Core server.
+#
+#
+# chkconfig: 345 80 20
+# description: eclipsimd
+# processname: eclipsimd
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/eclipsimd, see below
+if [ -f /etc/sysconfig/eclipsimd ]; then
+        . /etc/sysconfig/eclipsimd
+fi
+
+RETVAL=0
+
+prog=eclipsimd
+# you can override the lockfile via BITCOIND_LOCKFILE in /etc/sysconfig/eclipsimd
+lockfile=${BITCOIND_LOCKFILE-/var/lock/subsys/eclipsimd}
+
+# eclipsimd defaults to /usr/bin/eclipsimd, override with BITCOIND_BIN
+eclipsimd=${BITCOIND_BIN-/usr/bin/eclipsimd}
+
+# eclipsimd opts default to -disablewallet, override with BITCOIND_OPTS
+eclipsimd_opts=${BITCOIND_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $eclipsimd $eclipsimd_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac

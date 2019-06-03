@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[eclipsim.qt-translation-012x]
+file_filter = src/qt/locale/eclipsim_<lang>.ts
+source_file = src/qt/locale/eclipsim_en.ts
+source_lang = en

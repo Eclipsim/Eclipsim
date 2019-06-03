@@ -1,0 +1,22 @@
+[Unit]
+Description=Eclipsim's distributed currency daemon
+After=network.target
+
+[Service]
+User=eclipsimcore
+Group=eclipsimcore
+
+Type=forking
+PIDFile=/var/lib/eclipsimd/eclipsimd.pid
+ExecStart=/usr/bin/eclipsimd -daemon -pid=/var/lib/eclipsimd/eclipsimd.pid \
+-conf=/etc/eclipsimcore/eclipsim.conf -datadir=/var/lib/eclipsimd -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

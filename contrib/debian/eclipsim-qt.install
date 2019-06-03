@@ -1,0 +1,6 @@
+usr/local/bin/eclipsim-qt usr/bin
+share/pixmaps/eclipsim32.xpm usr/share/pixmaps
+share/pixmaps/eclipsim16.xpm usr/share/pixmaps
+share/pixmaps/eclipsim128.png usr/share/pixmaps
+debian/eclipsim-qt.desktop usr/share/applications
+debian/eclipsim-qt.protocol usr/share/kde4/services/
